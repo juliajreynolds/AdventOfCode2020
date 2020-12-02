@@ -1,6 +1,5 @@
 import string
 
-
 def countValidPasswords(filename):
     validCount = 0
     with open(filename, "r") as passwords:
@@ -19,7 +18,6 @@ def countValidPasswords(filename):
 
     return validCount
 
-
 def parseInput(entry):
     components = entry.split(":")
     configs = components[0]
@@ -33,7 +31,6 @@ def parseInput(entry):
     max_position = int(min_max[1]) - 1
     targetCharacter = config_elements[1]
     return max_position, min_position, password, targetCharacter
-
 
 if __name__ == "__main__":
     result = countValidPasswords("input.txt")
