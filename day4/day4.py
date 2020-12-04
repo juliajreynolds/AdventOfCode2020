@@ -15,8 +15,7 @@ def countTrees(filename,row_step,col_step):
             row = row.replace('\n', '')
 
             while col_index >= len(row):
-             #row = row + row
-                col_index = col_index - 31
+             row = row + row
 
             target_row = list(row)
             target = target_row[col_index]
@@ -29,15 +28,9 @@ def countTrees(filename,row_step,col_step):
 
     return tree_count
 
+
+
 if __name__ == "__main__":
     result1 = countTrees("input.txt",1,1)
     print(result1)
-    result2 = countTrees("input.txt", 1, 3)
-    print(result2)
-    result3 = countTrees("input.txt", 1, 5)
-    print(result3)
-    result4 = countTrees("input.txt", 1, 7)
-    print(result4)
-    result5 = countTrees("input.txt", 2, 1)
-    print(result5)
-    print(result1 * result2 * result3 * result4 * result5)
+
