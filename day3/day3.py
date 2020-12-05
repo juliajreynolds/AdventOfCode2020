@@ -14,9 +14,9 @@ def countTrees(filename,row_step,col_step):
             row = hillside_rows[row_index]
             row = row.replace('\n', '')
 
-
             while col_index >= len(row):
-             row = row + row
+             #row = row + row
+                col_index = col_index - 31
 
             target_row = list(row)
             target = target_row[col_index]
@@ -28,8 +28,6 @@ def countTrees(filename,row_step,col_step):
             col_index += col_step
 
     return tree_count
-
-
 
 if __name__ == "__main__":
     result1 = countTrees("input.txt",1,1)
