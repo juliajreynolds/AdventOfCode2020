@@ -28,26 +28,27 @@ def findTotalUnanimousYes(filename):
     all_group_responses = []
     with open(filename, "r") as fp:
         current_group_set = set()
+        common_group_choices = set()
         for entry in fp:
 
             entry = entry.replace('\n', '')
 
             if len(entry) >= 1:
-
-                letters = [char for char in entry]
-                for letter in letters:
-                    current_group_set.add(letter)
+                entrySet = frozenset(entry)
+                current_group_set.add(entrySet)
             else:
-                all_group_responses.append(current_group_set)
+                common_group_choices = set.intersection(*[set(x) for x in current_group_set])
+                all_group_responses.append(common_group_choices)
                 current_group_set = set()
         # get the last entry
-    all_group_responses.append(current_group_set)
+    common_group_choices = set.intersection(*[set(x) for x in current_group_set])
+    all_group_responses.append(common_group_choices)
 
-    result = set()
-    result = result.intersection(*all_group_responses)
+    for group_response in all_group_responses:
+        total_unanimous_yes += len(group_response)
 
-    return len(result)
+    return total_unanimous_yes
 
 if __name__ == "__main__":
-    result1 = findTotalYes("input.txt")
+    result1 = findTotalUnanimousYes("input.txt")
     print(result1)
