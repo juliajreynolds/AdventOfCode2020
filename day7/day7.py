@@ -1,54 +1,44 @@
-def findTotalYes(filename):
-    all_group_responses = []
-    total_yes = 0
-    with open(filename, "r") as fp:
-        current_group_set = set()
-        for entry in fp:
+def part1(bags, stringNeeded):
+    bagsList = []
+    for x in bags:
+        findBag = x.find(' bags contain')
+        if stringNeeded in x[findBag:]:
+            bagsList.append(x[:findBag])
+            bagsList.extend(part1(bags, x[:findBag]))
+    return bagsList
 
-            entry = entry.replace('\n', '')
+def parseShinyBags(filename):
+    myFile = open(filename, "r")
+    content = myFile.read().splitlines()
+    return len(set(part1(content, "shiny gold")))
 
-            if len(entry) >= 1:
-                letters = [char for char in entry]
-                for letter in letters:
-                    current_group_set.add(letter)
-            else:
-                all_group_responses.append(current_group_set)
-                current_group_set = set()
-    # get the last entry
-    all_group_responses.append(current_group_set)
+# def countBagsInsideGold(filename):
+#     myFile = open(filename, "r")
+#     content = myFile.read().split('\n')
+#     allBags = {}
+#
+#     for line in content:
+#         line = line.replace("bags", "").replace("bag", "").strip(".")
+#         line = line.split("contain")
+#         allBags[line[0].strip()] = line[1].strip().split(',')
+#
+# def getBag(bags):
+#     total = 1
+#     if "no other" in allBags[bags]:
+#         return 1
+#     for colours in allBags[bags]:
+#         each = colours.split()
+#         total += int(each[0]) * getBag(" ".join(each[1:]))
+#     return total
+#
+#
+# print(getBag("shiny gold")-1)
 
-    for group_response in all_group_responses:
-        total_yes += len(group_response)
-
-    return total_yes
-
-
-def findTotalUnanimousYes(filename):
-    total_unanimous_yes = 0
-    all_group_responses = []
-    with open(filename, "r") as fp:
-        current_group_set = set()
-        common_group_choices = set()
-        for entry in fp:
-
-            entry = entry.replace('\n', '')
-
-            if len(entry) >= 1:
-                entrySet = frozenset(entry)
-                current_group_set.add(entrySet)
-            else:
-                common_group_choices = set.intersection(*[set(x) for x in current_group_set])
-                all_group_responses.append(common_group_choices)
-                current_group_set = set()
-        # get the last entry
-    common_group_choices = set.intersection(*[set(x) for x in current_group_set])
-    all_group_responses.append(common_group_choices)
-
-    for group_response in all_group_responses:
-        total_unanimous_yes += len(group_response)
-
-    return total_unanimous_yes
 
 if __name__ == "__main__":
-    result1 = findTotalUnanimousYes("input.txt")
-    print(result1)
+    print(parseShinyBags("input.txt"))
+
+
+
+
+
